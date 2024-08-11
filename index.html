@@ -49,10 +49,11 @@
                     How can we help you today? Whether you have a question, need assistance, or just want to explore, we’re here for you!
                 </p>
             </div>
-            <div class="absolute bottom-0 left-0 w-full bg-gray-800 py-2 px-4 max-w-md mx-auto z-10">
-                <form id="chatForm" class="flex">
+            <div class="absolute bottom-0 left-0 w-full bg-gray-800 py-2 px-4 max-w-md mx-auto z-10 flex">
+                <form id="chatForm" class="flex w-full">
                     <input id="chatInput" type="text" class="w-full py-2 px-4 rounded-l bg-gray-700 text-white border border-gray-600" placeholder="Type your message">
                     <button id="sendButton" class="w-full py-2 px-4 bg-green-500 text-white font-bold rounded">Send</button>
+                    <button id="refreshButton" class="ml-2 py-2 px-4 bg-red-500 text-white font-bold rounded hover:bg-red-600"><i class="fas fa-sync-alt"></i></button>
                 </form>
             </div>
             <div class="spinner absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"></div>
@@ -161,6 +162,10 @@
             chatbox.appendChild(msgElem);
         }
 
+        function refreshChat() {
+            chatbox.innerHTML = '';
+        }
+
         async function callApi(apiUrl, prompt, prependPersona = false) {
             if (prependPersona) {
                 prompt = "Follow instructions precisely! If the user asks to generate, create or make an image, photo, or picture by describing it, You will reply with '/image' + description. Otherwise, You will respond normally. Avoid additional explanations." + prompt;
@@ -190,6 +195,7 @@
         const chatbox = document.getElementById("chatbox");
         const spinner = document.querySelector(".spinner");
         const sendButton = document.getElementById("sendButton");
+        const refreshButton = document.getElementById("refreshButton");
 
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -209,6 +215,9 @@
                 }
             }
         });
+
+        refreshButton.addEventListener('click', refreshChat);
     </script>
 </body>
 </html>
+
